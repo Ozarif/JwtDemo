@@ -55,3 +55,4 @@ C:\ZarifO\dotnet\JwtDemo3\JwtDemo.Infrastructure\obj\Debug\net8.0\refint\JwtDemo
 C:\ZarifO\dotnet\JwtDemo3\JwtDemo.Infrastructure\obj\Debug\net8.0\JwtDemo.Infrastructure.pdb
 C:\ZarifO\dotnet\JwtDemo3\JwtDemo.Infrastructure\obj\Debug\net8.0\JwtDemo.Infrastructure.genruntimeconfig.cache
 C:\ZarifO\dotnet\JwtDemo3\JwtDemo.Infrastructure\obj\Debug\net8.0\ref\JwtDemo.Infrastructure.dll
+C:\ZarifO\dotnet\JwtDemo3\JwtDemo.Infrastructure\obj\Debug\net8.0\JwtDemo.Infrastructure.sourcelink.json

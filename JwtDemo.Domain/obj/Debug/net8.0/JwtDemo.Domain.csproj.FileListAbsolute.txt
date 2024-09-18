@@ -34,3 +34,4 @@ C:\ZarifO\dotnet\JwtDemo3\JwtDemo.Domain\obj\Debug\net8.0\JwtDemo.Domain.dll
 C:\ZarifO\dotnet\JwtDemo3\JwtDemo.Domain\obj\Debug\net8.0\refint\JwtDemo.Domain.dll
 C:\ZarifO\dotnet\JwtDemo3\JwtDemo.Domain\obj\Debug\net8.0\JwtDemo.Domain.pdb
 C:\ZarifO\dotnet\JwtDemo3\JwtDemo.Domain\obj\Debug\net8.0\ref\JwtDemo.Domain.dll
+C:\ZarifO\dotnet\JwtDemo3\JwtDemo.Domain\obj\Debug\net8.0\JwtDemo.Domain.sourcelink.json
