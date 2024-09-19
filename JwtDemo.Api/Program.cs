@@ -1,7 +1,7 @@
 using JwtDemo.Infrastructure.DependencyInjection;
 using JwtDemo.Application.DependencyInjection;
 using Microsoft.OpenApi.Models;
-
+using JwtDemo.Api.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -49,6 +49,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCustomExceptionHandler();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

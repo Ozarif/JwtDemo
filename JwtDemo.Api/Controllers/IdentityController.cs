@@ -28,7 +28,7 @@ namespace JwtDemo.Api.Controllers
             var result = await _sender.Send(command);
             if (!result.IsSuccess)
                 return BadRequest(result.Error);
-            
+
             return Ok(result);
         }
 
@@ -40,7 +40,7 @@ namespace JwtDemo.Api.Controllers
             var result = await _sender.Send(query);
             if (!result.IsSuccess)
                 return Unauthorized(result.Error);
-            
+
             return Ok(new { Token = result.Value.Token, Expiration = result.Value.Expiration });
         }
     }

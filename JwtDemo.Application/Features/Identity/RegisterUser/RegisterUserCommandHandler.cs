@@ -19,7 +19,7 @@ namespace JwtDemo.Application.Features.Identity.RegisterUser
 
         public async Task<Result> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
-            return await _identityService.RegisterUserAsync(request.Username, request.FullName, request.Email, request.Password, request.Roles,cancellationToken);
+            return await _identityService.RegisterUserAsync(request.Username, request.FullName, request.Email, request.Password, request.Roles, cancellationToken);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace JwtDemo.Infrastructure.Identity
             var roles = await _userManager.GetRolesAsync(user);
             var tokenResponse = _jwtService.GenerateJwtToken(user, roles);
 
-            return Result.Success(new LoginResponse { Token = tokenResponse.Token,Expiration= tokenResponse.Expiration });
+            return Result.Success(new LoginResponse { Token = tokenResponse.Token, Expiration = tokenResponse.Expiration });
         }
 
         public async Task<Result> RegisterUserAsync(string username, string fullName, string email, string password, List<string> roles, CancellationToken cancellationToken = default)
@@ -49,12 +49,13 @@ namespace JwtDemo.Infrastructure.Identity
             {
                 UserName = username,
                 Email = email,
-                FullName = fullName
+                FullName = fullName,
+                SecurityStamp = Guid.NewGuid().ToString()
             };
 
             var result = await _userManager.CreateAsync(user, password);
             if (!result.Succeeded)
-                return Result.Failure(DemoUserError.ServerError);
+                return Result.Failure(new Error("DemoUser.ServerError", string.Join(" | ", result.Errors.Select(e => e.Description))));
             // return Result.Failure(result.Errors.Select(e => e.Description).ToList());
 
             if (roles != null && roles.Any())
