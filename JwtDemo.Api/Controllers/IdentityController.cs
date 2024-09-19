@@ -6,10 +6,12 @@ using JwtDemo.Application.Features.Identity.LoginUser;
 using JwtDemo.Application.Features.Identity.RegisterUser;
 using JwtDemo.Domain.Abstractions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JwtDemo.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class IdentityController : ControllerBase
@@ -31,7 +33,7 @@ namespace JwtDemo.Api.Controllers
 
             return Ok(result);
         }
-
+        [AllowAnonymous]
         [HttpPost("login")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LoginResponse))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
