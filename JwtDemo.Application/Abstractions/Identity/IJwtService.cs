@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using JwtDemo.Domain.Identity;
 
-namespace JwtDemo.Application.Abstractions
+namespace JwtDemo.Application.Abstractions.Identity
 {
     public interface IJwtService
     {

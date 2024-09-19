@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace JwtDemo.Application.Abstractions
+namespace JwtDemo.Application.Abstractions.Identity
 {
     public class JwtResponse
     {

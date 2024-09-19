@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "ME/XOyNcsFQPo15V1wILGCdDF25kZ+lMHbR8k3CS3LfnreUnpmjb8GnX1DdhJPm875rLjsDOLu1oKlazDt7eqQ==",
+  "dgSpecHash": "bpoumhjrGhIwMn9nmiAwYjR6jRVyoznxiRqzKDf7dOcd+uL6QdyNe2F8Ap3l8dmN6DReM3FZYGztCyYg0Qb+iQ==",
   "success": true,
   "projectFilePath": "C:\\ZarifO\\dotnet\\JwtDemo3\\JwtDemo.Infrastructure\\JwtDemo.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Hp\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\Hp\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
+    "C:\\Users\\Hp\\.nuget\\packages\\fluentvalidation\\11.10.0\\fluentvalidation.11.10.0.nupkg.sha512",
+    "C:\\Users\\Hp\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.10.0\\fluentvalidation.dependencyinjectionextensions.11.10.0.nupkg.sha512",
     "C:\\Users\\Hp\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Hp\\.nuget\\packages\\mediatr\\12.4.1\\mediatr.12.4.1.nupkg.sha512",
     "C:\\Users\\Hp\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",

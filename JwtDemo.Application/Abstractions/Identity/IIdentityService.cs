@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using JwtDemo.Application.Features.Identity.LoginUser;
 using JwtDemo.Domain.Abstractions;
 
-namespace JwtDemo.Application.Abstractions
+namespace JwtDemo.Application.Abstractions.Identity
 {
     public interface IIdentityService
     {

@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "LCytUBvvun8FfIccSe1UAX6odyxsUF3SAk+UnQYLUfCgOWtPeDFKO/SVdjpBfqvNAVjSGpQ/gwqJYMC+J8T51A==",
+  "dgSpecHash": "Fe/wczxzduoc4mCJ0RTLlNlkv5KwurEXHLNX3WfpFc6AjTFzXVhl4VgDFe2mW/qvVrxFOBxPZvc3mjqH87XG9g==",
   "success": true,
   "projectFilePath": "C:\\ZarifO\\dotnet\\JwtDemo3\\JwtDemo.Application\\JwtDemo.Application.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Hp\\.nuget\\packages\\fluentvalidation\\11.10.0\\fluentvalidation.11.10.0.nupkg.sha512",
+    "C:\\Users\\Hp\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.10.0\\fluentvalidation.dependencyinjectionextensions.11.10.0.nupkg.sha512",
     "C:\\Users\\Hp\\.nuget\\packages\\mediatr\\12.4.1\\mediatr.12.4.1.nupkg.sha512",
     "C:\\Users\\Hp\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
     "C:\\Users\\Hp\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\8.0.8\\microsoft.aspnetcore.cryptography.internal.8.0.8.nupkg.sha512",

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using JwtDemo.Application.Abstractions;
+using JwtDemo.Application.Abstractions.Identity;
 using JwtDemo.Application.Features.Identity.LoginUser;
 using JwtDemo.Domain.Abstractions;
 using JwtDemo.Domain.Identity;
@@ -39,7 +39,7 @@ namespace JwtDemo.Infrastructure.Identity
             return Result.Success(new LoginResponse { Token = tokenResponse.Token,Expiration= tokenResponse.Expiration });
         }
 
-        public async Task<Result> RegisterUserAsync(string username, string email, string phoneNumber, string password, List<string> roles, CancellationToken cancellationToken = default)
+        public async Task<Result> RegisterUserAsync(string username, string fullName, string email, string password, List<string> roles, CancellationToken cancellationToken = default)
         {
             var userExists = await _userManager.FindByNameAsync(username);
             if (userExists != null)
@@ -49,7 +49,7 @@ namespace JwtDemo.Infrastructure.Identity
             {
                 UserName = username,
                 Email = email,
-                PhoneNumber = phoneNumber
+                FullName = fullName
             };
 
             var result = await _userManager.CreateAsync(user, password);

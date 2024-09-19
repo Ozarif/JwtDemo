@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using JwtDemo.Application.Features.Identity.LoginUser;
 using JwtDemo.Application.Features.Identity.RegisterUser;
+using JwtDemo.Domain.Abstractions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,16 +21,20 @@ namespace JwtDemo.Api.Controllers
             _sender = sender;
         }
         [HttpPost("register")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Register([FromBody] RegisterUserCommand command)
         {
             var result = await _sender.Send(command);
             if (!result.IsSuccess)
                 return BadRequest(result.Error);
             
-            return Ok(result.Error);
+            return Ok(result);
         }
 
-            [HttpPost("login")]
+        [HttpPost("login")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LoginResponse))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Login([FromBody] LoginUserQuery query)
         {
             var result = await _sender.Send(query);

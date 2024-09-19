@@ -1,5 +1,5 @@
 using System.Security.Principal;
-using JwtDemo.Application.Abstractions;
+using JwtDemo.Application.Abstractions.Identity;
 using JwtDemo.Application.Abstractions.Messaging;
 using JwtDemo.Domain.Abstractions;
 

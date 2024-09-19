@@ -1,5 +1,5 @@
 using System.Text;
-using JwtDemo.Application.Abstractions;
+using JwtDemo.Application.Abstractions.Identity;
 using JwtDemo.Domain.Identity;
 using JwtDemo.Infrastructure.Identity;
 using JwtDemo.Infrastructure.Persistence.Data;
@@ -38,7 +38,12 @@ namespace JwtDemo.Infrastructure.DependencyInjection
 
    
         // Configure JWT authentication
-        var key = Encoding.ASCII.GetBytes(configuration["JwtSettings:Secret"]!);
+
+        var serviceProvider = services.BuildServiceProvider();
+        var jwtSettings = serviceProvider.GetRequiredService<IOptions<JwtSettings>>().Value;
+
+        //var key = Encoding.ASCII.GetBytes(configuration["JwtSettings:Secret"]!);
+        var key = Encoding.ASCII.GetBytes(jwtSettings.Secret);
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -55,8 +60,8 @@ namespace JwtDemo.Infrastructure.DependencyInjection
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
                 ClockSkew = TimeSpan.Zero,
-                ValidIssuer = configuration["JwtSettings:Issuer"],
-                ValidAudience = configuration["JwtSettings:Audience"],
+                ValidIssuer = jwtSettings.Issuer, //configuration["JwtSettings:Issuer"],
+                ValidAudience = jwtSettings.Audience, //configuration["JwtSettings:Audience"],
                 IssuerSigningKey = new SymmetricSecurityKey(key)
             };
 

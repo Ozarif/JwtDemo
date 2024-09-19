@@ -277,3 +277,5 @@ C:\ZarifO\dotnet\JwtDemo3\JwtDemo.Api\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis
 C:\ZarifO\dotnet\JwtDemo3\JwtDemo.Api\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\ZarifO\dotnet\JwtDemo3\JwtDemo.Api\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\ZarifO\dotnet\JwtDemo3\JwtDemo.Api\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\ZarifO\dotnet\JwtDemo3\JwtDemo.Api\bin\Debug\net8.0\FluentValidation.dll
+C:\ZarifO\dotnet\JwtDemo3\JwtDemo.Api\bin\Debug\net8.0\FluentValidation.DependencyInjectionExtensions.dll
