@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using JwtDemo.Application.Abstractions.Identity;
+using JwtDemo.Application.Features.Identity.GetAllUsers;
 using JwtDemo.Application.Features.Identity.LoginUser;
 using JwtDemo.Domain.Abstractions;
 using JwtDemo.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace JwtDemo.Infrastructure.Identity
 {
@@ -22,6 +24,33 @@ namespace JwtDemo.Infrastructure.Identity
             _roleManager = roleManager;
             _jwtService = jwtService;
         }
+
+        public async Task<Result<IReadOnlyCollection<UserResponse>>> GetAllUsers(CancellationToken cancellationToken = default)
+        {
+            var users = await _userManager.Users.ToListAsync(cancellationToken);
+
+            var usersResponse = new List<UserResponse>();
+            if (users is null)
+            {
+                return usersResponse;
+            }
+
+            foreach (var user in users)
+            {
+                var userResponse = new UserResponse()
+                {
+                    UserId = user.Id!,
+                    Username = user.UserName!,
+                    FullName = user.FullName,
+                    Email = user.Email!,
+                    Roles = (await _userManager.GetRolesAsync(user)).ToList()
+                };
+                usersResponse.Add(userResponse);
+            }
+
+            return usersResponse;
+        }
+
         public async Task<bool> IsUserExistsAsync(string username)
         {
             return await _userManager.FindByNameAsync(username) != null;

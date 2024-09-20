@@ -13,7 +13,7 @@ builder.Services.AddInfrastructureServices(builder.Configuration);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options=>
+builder.Services.AddSwaggerGen(options =>
 		{
 			options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
 			{
@@ -23,7 +23,7 @@ builder.Services.AddSwaggerGen(options=>
 				Type = SecuritySchemeType.ApiKey
 			});
 
-			var scheme = new OpenApiSecurityScheme 
+			var scheme = new OpenApiSecurityScheme
 			{
 				Reference = new OpenApiReference
 				{
@@ -40,12 +40,12 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-        c.RoutePrefix = string.Empty; // This makes Swagger UI accessible at the root URL
-    });
+	app.UseSwagger();
+	app.UseSwaggerUI(c =>
+	{
+		c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+		c.RoutePrefix = string.Empty; // This makes Swagger UI accessible at the root URL
+	});
 }
 
 app.UseHttpsRedirection();

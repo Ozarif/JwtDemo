@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using JwtDemo.Application.Features.Identity.GetAllUsers;
 using JwtDemo.Application.Features.Identity.LoginUser;
 using JwtDemo.Application.Features.Identity.RegisterUser;
 using JwtDemo.Domain.Abstractions;
@@ -22,6 +23,7 @@ namespace JwtDemo.Api.Controllers
         {
             _sender = sender;
         }
+
         [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Result))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -44,6 +46,18 @@ namespace JwtDemo.Api.Controllers
                 return Unauthorized(result.Error);
 
             return Ok(new { Token = result.Value.Token, Expiration = result.Value.Expiration });
+        }
+
+        [HttpGet("GetUsers")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<UserResponse>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetUsers()
+        {
+            var result = await _sender.Send(new GetAllUsersQuery());
+            if (!result.IsSuccess)
+                return BadRequest(result.Error);
+
+            return Ok(result.Value);
         }
     }
 }
