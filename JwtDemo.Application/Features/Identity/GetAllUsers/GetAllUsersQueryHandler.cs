@@ -8,7 +8,7 @@ using JwtDemo.Domain.Abstractions;
 
 namespace JwtDemo.Application.Features.Identity.GetAllUsers
 {
-    public class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQuery, IReadOnlyCollection<UserResponse>>
+    internal class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQuery, IReadOnlyCollection<UserResponse>>
     {
         private readonly IIdentityService _identityService;
 
@@ -19,7 +19,7 @@ namespace JwtDemo.Application.Features.Identity.GetAllUsers
 
         public async Task<Result<IReadOnlyCollection<UserResponse>>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
-            return await _identityService.GetAllUsers(cancellationToken);
+            return await _identityService.GetAllUsersAsync(cancellationToken);
         }
     }
 }

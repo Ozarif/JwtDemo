@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using JwtDemo.Application.Abstractions.Email;
+using JwtDemo.Application.Features.Identity.ForgotPassword;
 using JwtDemo.Application.Features.Identity.GetAllUsers;
 using JwtDemo.Application.Features.Identity.LoginUser;
 using JwtDemo.Application.Features.Identity.RegisterUser;
+using JwtDemo.Application.Features.Identity.ResetUserPassword;
 using JwtDemo.Domain.Abstractions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -58,6 +61,31 @@ namespace JwtDemo.Api.Controllers
                 return BadRequest(result.Error);
 
             return Ok(result.Value);
+        }
+
+        [HttpGet("ForgotPassword")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> ForgotPassword([FromBody] string UserEmail)
+        {
+            var result = await _sender.Send(new ForgotPasswordQuery(UserEmail));
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Error);
+            }
+            return Ok(result.Value);
+        }
+        [HttpPost("ResetPassword")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> ResetPassword(string userEmail, string resetToken, string newPassword)
+        {
+            var result = await _sender.Send(new ResetUserPasswordCommand(userEmail, resetToken, newPassword));
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Error);
+            }
+            return Ok(result);
         }
     }
 }

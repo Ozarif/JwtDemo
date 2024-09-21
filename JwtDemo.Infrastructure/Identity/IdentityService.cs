@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using JwtDemo.Application.Abstractions.Identity;
+using JwtDemo.Application.Features.Identity.ForgotPassword;
 using JwtDemo.Application.Features.Identity.GetAllUsers;
 using JwtDemo.Application.Features.Identity.LoginUser;
 using JwtDemo.Domain.Abstractions;
@@ -25,25 +26,53 @@ namespace JwtDemo.Infrastructure.Identity
             _jwtService = jwtService;
         }
 
-        public async Task<Result<IReadOnlyCollection<UserResponse>>> GetAllUsers(CancellationToken cancellationToken = default)
+        public async Task<Result> ChangePasswordAsync(string UserName, string CurrentPassword, string NewPassword, CancellationToken cancellationToken = default)
+        {
+            var user = await _userManager.FindByNameAsync(UserName);
+
+            if (user is null)
+                return Result.Failure(DemoUserError.NotFound);
+
+            IdentityResult result = await _userManager.ChangePasswordAsync(user, CurrentPassword, NewPassword);
+
+            if (result.Succeeded)
+                return Result.Success();
+
+            else
+                return Result.Failure(DemoUserError.GetError(result.Errors.Select(e => e.Description)));
+        }
+
+        public async Task<Result<ForgotPasswordResponse>> ForgotPasswordAsync(string userEmail, CancellationToken cancellationToken = default)
+        {
+            var user = await _userManager.FindByEmailAsync(userEmail);
+
+            if (user is null)
+                return Result.Failure<ForgotPasswordResponse>(DemoUserError.NotFound);
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            return Result.Success(new ForgotPasswordResponse() { ResetToken = token });
+        }
+
+        public async Task<Result<IReadOnlyCollection<UserResponse>>> GetAllUsersAsync(CancellationToken cancellationToken = default)
         {
             var users = await _userManager.Users.ToListAsync(cancellationToken);
 
             var usersResponse = new List<UserResponse>();
             if (users is null)
-            {
                 return usersResponse;
-            }
+
 
             foreach (var user in users)
             {
+                var userRoles = (await _userManager.GetRolesAsync(user)).ToList();
                 var userResponse = new UserResponse()
                 {
                     UserId = user.Id!,
                     Username = user.UserName!,
                     FullName = user.FullName,
                     Email = user.Email!,
-                    Roles = (await _userManager.GetRolesAsync(user)).ToList()
+                    Roles = userRoles
                 };
                 usersResponse.Add(userResponse);
             }
@@ -84,8 +113,8 @@ namespace JwtDemo.Infrastructure.Identity
 
             var result = await _userManager.CreateAsync(user, password);
             if (!result.Succeeded)
-                return Result.Failure(new Error("DemoUser.ServerError", string.Join(" | ", result.Errors.Select(e => e.Description))));
-            // return Result.Failure(result.Errors.Select(e => e.Description).ToList());
+                return Result.Failure(DemoUserError.GetError(result.Errors.Select(e => e.Description)));
+
 
             if (roles != null && roles.Any())
             {
@@ -97,6 +126,21 @@ namespace JwtDemo.Infrastructure.Identity
                     await _userManager.AddToRoleAsync(user, role);
                 }
             }
+
+            return Result.Success();
+        }
+
+        public async Task<Result> ResetPasswordAsync(string userEmail, string token, string newPassword, CancellationToken cancellationToken = default)
+        {
+            var user = await _userManager.FindByEmailAsync(userEmail);
+
+            if (user is null)
+                return Result.Failure(DemoUserError.NotFound);
+
+            var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+
+            if (!result.Succeeded)
+                return Result.Failure(DemoUserError.GetError(result.Errors.Select(e => e.Description)));
 
             return Result.Success();
         }

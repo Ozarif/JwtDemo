@@ -7,7 +7,7 @@ using JwtDemo.Domain.Abstractions;
 
 namespace JwtDemo.Application.Features.Identity.GetAllUsers
 {
-    public class GetAllUsersQuery  : IQuery<IReadOnlyCollection<UserResponse>>
+    public sealed record GetAllUsersQuery  : IQuery<IReadOnlyCollection<UserResponse>>
     {
     }
 }
