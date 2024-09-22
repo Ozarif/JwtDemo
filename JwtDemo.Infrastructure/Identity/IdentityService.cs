@@ -45,9 +45,9 @@ namespace JwtDemo.Infrastructure.Identity
 
         public async Task<Result> CreateRoleAsync(string roleName, CancellationToken cancellationToken = default)
         {
-            if(await _roleManager.Roles.AnyAsync(r => r.Name!.ToLower() == roleName.ToLower(), cancellationToken))
+            if (await _roleManager.Roles.AnyAsync(r => r.Name!.ToLower() == roleName.ToLower(), cancellationToken))
                 return Result.Failure(DemoRoleError.AlreadyExists);
-            
+
             var newRole = new DemoRole();
             newRole.Name = roleName;
             var result = await _roleManager.CreateAsync(newRole);
@@ -58,7 +58,36 @@ namespace JwtDemo.Infrastructure.Identity
 
             return Result.Failure(DemoRoleError.GetError(result.Errors.Select(e => e.Description)));
         }
+        public async Task<Result> DeleteRoleAsync(string roleId, CancellationToken cancellationToken = default)
+        {
+            var role = await _roleManager.FindByIdAsync(roleId);
+            if (role == null)
+            {
+                return Result.Failure(DemoRoleError.NotFound);
+            }
 
+            var usersInRole = new List<DemoUser>();
+
+            foreach (var user in _userManager.Users.ToList())
+            {
+                if (await _userManager.IsInRoleAsync(user, role.Name!))
+                {
+                    usersInRole.Add(user);
+                }
+            }
+            if (usersInRole.Any())
+            {
+                return Result.Failure(DemoRoleError.RoleInUse);
+            }
+            var result = await _roleManager.DeleteAsync(role);
+
+            if (result.Succeeded)
+            {
+                return Result.Success();
+            }
+
+            return Result.Failure(DemoRoleError.GetError(result.Errors.Select(e => e.Description)));
+        }
         public async Task<Result<ForgotPasswordResponse>> ForgotPasswordAsync(string userEmail, CancellationToken cancellationToken = default)
         {
             var user = await _userManager.FindByEmailAsync(userEmail);
@@ -73,18 +102,18 @@ namespace JwtDemo.Infrastructure.Identity
 
         public async Task<Result<IReadOnlyCollection<RoleResponse>>> GetAllRolesAsync(CancellationToken cancellationToken = default)
         {
-           var roles = await _roleManager.Roles.ToListAsync(cancellationToken);
-           var rolesResponse = new List<RoleResponse>();
-           if(roles.Count == 0)
+            var roles = await _roleManager.Roles.ToListAsync(cancellationToken);
+            var rolesResponse = new List<RoleResponse>();
+            if (roles.Count == 0)
                 return rolesResponse;
-            
+
             foreach (var role in roles)
             {
                 var roleRespone = new RoleResponse()
                 {
                     Id = role.Id,
                     Name = role.Name!
-        
+
                 };
                 rolesResponse.Add(roleRespone);
             }

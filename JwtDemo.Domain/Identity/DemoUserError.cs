@@ -22,10 +22,7 @@ namespace JwtDemo.Domain.Identity
         public static readonly Error ServerError = new(
                     "ApplicationUser.ServerError",
                     "Failed to create user");
-        
-                public static readonly Error RoleAlreadyExists = new(
-                 "Role.AlreadyExist",
-                 "Role already exists");
+      
         public static Error GetError(IEnumerable<string> errors)
         {
             return new Error("DemoUser.ServerError", string.Join(" | ", errors));

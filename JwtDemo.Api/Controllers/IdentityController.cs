@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using JwtDemo.Application.Abstractions.Email;
 using JwtDemo.Application.Features.Identity.CreateRole;
+using JwtDemo.Application.Features.Identity.DeleteRole;
 using JwtDemo.Application.Features.Identity.ForgotPassword;
 using JwtDemo.Application.Features.Identity.GetAllRoles;
 using JwtDemo.Application.Features.Identity.GetAllUsers;
@@ -91,7 +92,7 @@ namespace JwtDemo.Api.Controllers
         [HttpPost("ResetPassword")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> ResetPassword([FromBody]ResetUserPasswordCommand request)
+        public async Task<IActionResult> ResetPassword([FromBody] ResetUserPasswordCommand request)
         {
             var result = await _sender.Send(request);
             if (!result.IsSuccess)
@@ -104,7 +105,21 @@ namespace JwtDemo.Api.Controllers
         [HttpPost("CreateRole")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateRole([FromBody]CreateRoleCommand request)
+        public async Task<IActionResult> CreateRole([FromBody] CreateRoleCommand request)
+        {
+            var result = await _sender.Send(request);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Error);
+            }
+            return Ok(result);
+        }
+
+
+        [HttpDelete("DeleteRole")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> DeleteRole([FromBody] DeleteRoleCommand request)
         {
             var result = await _sender.Send(request);
             if (!result.IsSuccess)
