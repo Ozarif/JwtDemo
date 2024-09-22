@@ -9,7 +9,7 @@ using JwtDemo.Domain.Abstractions;
 
 namespace JwtDemo.Application.Features.Identity.ForgotPassword
 {
-    public class ForgotPasswordQueryHandler : IQueryHandler<ForgotPasswordQuery, ForgotPasswordResponse>
+    internal class ForgotPasswordQueryHandler : IQueryHandler<ForgotPasswordQuery, ForgotPasswordResponse>
     {
 
         private readonly IIdentityService _identityService;

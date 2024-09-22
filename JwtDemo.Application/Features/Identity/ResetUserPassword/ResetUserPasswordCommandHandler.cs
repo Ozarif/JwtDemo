@@ -8,7 +8,7 @@ using JwtDemo.Domain.Abstractions;
 
 namespace JwtDemo.Application.Features.Identity.ResetUserPassword
 {
-    public class ResetUserPasswordCommandHandler : ICommandHandler<ResetUserPasswordCommand>
+    internal class ResetUserPasswordCommandHandler : ICommandHandler<ResetUserPasswordCommand>
     {
         private readonly IIdentityService _identityService;
 

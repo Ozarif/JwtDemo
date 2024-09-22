@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using JwtDemo.Application.Abstractions.Email;
+using JwtDemo.Application.Features.Identity.CreateRole;
 using JwtDemo.Application.Features.Identity.ForgotPassword;
+using JwtDemo.Application.Features.Identity.GetAllRoles;
 using JwtDemo.Application.Features.Identity.GetAllUsers;
 using JwtDemo.Application.Features.Identity.LoginUser;
 using JwtDemo.Application.Features.Identity.RegisterUser;
@@ -62,13 +64,24 @@ namespace JwtDemo.Api.Controllers
 
             return Ok(result.Value);
         }
+        [HttpGet("GetRoles")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<RoleResponse>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetRoles()
+        {
+            var result = await _sender.Send(new GetAllRolesQuery());
+            if (!result.IsSuccess)
+                return BadRequest(result.Error);
+
+            return Ok(result.Value);
+        }
 
         [HttpGet("ForgotPassword")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> ForgotPassword([FromBody] string UserEmail)
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordQuery request)
         {
-            var result = await _sender.Send(new ForgotPasswordQuery(UserEmail));
+            var result = await _sender.Send(request);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Error);
@@ -78,9 +91,22 @@ namespace JwtDemo.Api.Controllers
         [HttpPost("ResetPassword")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> ResetPassword(string userEmail, string resetToken, string newPassword)
+        public async Task<IActionResult> ResetPassword([FromBody]ResetUserPasswordCommand request)
         {
-            var result = await _sender.Send(new ResetUserPasswordCommand(userEmail, resetToken, newPassword));
+            var result = await _sender.Send(request);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Error);
+            }
+            return Ok(result);
+        }
+
+        [HttpPost("CreateRole")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CreateRole([FromBody]CreateRoleCommand request)
+        {
+            var result = await _sender.Send(request);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Error);

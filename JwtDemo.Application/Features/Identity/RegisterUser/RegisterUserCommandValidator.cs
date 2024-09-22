@@ -6,7 +6,7 @@ using FluentValidation;
 
 namespace JwtDemo.Application.Features.Identity.RegisterUser
 {
-    public class RegisterUserCommandValidator : AbstractValidator<RegisterUserCommand>
+    internal class RegisterUserCommandValidator : AbstractValidator<RegisterUserCommand>
     {
         public RegisterUserCommandValidator()
         {

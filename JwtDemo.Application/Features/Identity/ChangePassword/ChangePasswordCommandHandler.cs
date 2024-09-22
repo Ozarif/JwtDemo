@@ -8,7 +8,7 @@ using JwtDemo.Domain.Abstractions;
 
 namespace JwtDemo.Application.Features.Identity.ChangePassword
 {
-    public class ChangePasswordCommandHandler : ICommandHandler<ChangePasswordCommand>
+    internal class ChangePasswordCommandHandler : ICommandHandler<ChangePasswordCommand>
     {
         private readonly IIdentityService _identityService;
 

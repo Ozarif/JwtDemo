@@ -6,7 +6,7 @@ using FluentValidation;
 
 namespace JwtDemo.Application.Features.Identity.ForgotPassword
 {
-    public class ForgotPasswordQueryValidator  : AbstractValidator<ForgotPasswordQuery>
+    internal class ForgotPasswordQueryValidator  : AbstractValidator<ForgotPasswordQuery>
     {
         public ForgotPasswordQueryValidator()
         {

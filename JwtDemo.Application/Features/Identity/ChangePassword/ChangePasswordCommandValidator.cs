@@ -6,7 +6,7 @@ using FluentValidation;
 
 namespace JwtDemo.Application.Features.Identity.ChangePassword
 {
-    public class ChangePasswordCommandValidator : AbstractValidator<ChangePasswordCommand>
+    internal class ChangePasswordCommandValidator : AbstractValidator<ChangePasswordCommand>
     {
         public ChangePasswordCommandValidator()
         {

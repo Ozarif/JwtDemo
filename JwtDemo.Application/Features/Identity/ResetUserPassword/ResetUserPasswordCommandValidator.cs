@@ -6,7 +6,7 @@ using FluentValidation;
 
 namespace JwtDemo.Application.Features.Identity.ResetUserPassword
 {
-    public class ResetUserPasswordCommandValidator : AbstractValidator<ResetUserPasswordCommand>
+    internal class ResetUserPasswordCommandValidator : AbstractValidator<ResetUserPasswordCommand>
     {
         public ResetUserPasswordCommandValidator()
         {

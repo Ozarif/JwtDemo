@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using JwtDemo.Application.Abstractions.Identity;
 using JwtDemo.Application.Features.Identity.ForgotPassword;
+using JwtDemo.Application.Features.Identity.GetAllRoles;
 using JwtDemo.Application.Features.Identity.GetAllUsers;
 using JwtDemo.Application.Features.Identity.LoginUser;
 using JwtDemo.Domain.Abstractions;
@@ -42,6 +43,22 @@ namespace JwtDemo.Infrastructure.Identity
                 return Result.Failure(DemoUserError.GetError(result.Errors.Select(e => e.Description)));
         }
 
+        public async Task<Result> CreateRoleAsync(string roleName, CancellationToken cancellationToken = default)
+        {
+            if(await _roleManager.Roles.AnyAsync(r => r.Name!.ToLower() == roleName.ToLower(), cancellationToken))
+                return Result.Failure(DemoRoleError.AlreadyExists);
+            
+            var newRole = new DemoRole();
+            newRole.Name = roleName;
+            var result = await _roleManager.CreateAsync(newRole);
+            if (result.Succeeded)
+            {
+                return Result.Success();
+            }
+
+            return Result.Failure(DemoRoleError.GetError(result.Errors.Select(e => e.Description)));
+        }
+
         public async Task<Result<ForgotPasswordResponse>> ForgotPasswordAsync(string userEmail, CancellationToken cancellationToken = default)
         {
             var user = await _userManager.FindByEmailAsync(userEmail);
@@ -54,6 +71,25 @@ namespace JwtDemo.Infrastructure.Identity
             return Result.Success(new ForgotPasswordResponse() { ResetToken = token });
         }
 
+        public async Task<Result<IReadOnlyCollection<RoleResponse>>> GetAllRolesAsync(CancellationToken cancellationToken = default)
+        {
+           var roles = await _roleManager.Roles.ToListAsync(cancellationToken);
+           var rolesResponse = new List<RoleResponse>();
+           if(roles.Count == 0)
+                return rolesResponse;
+            
+            foreach (var role in roles)
+            {
+                var roleRespone = new RoleResponse()
+                {
+                    Id = role.Id,
+                    Name = role.Name!
+        
+                };
+                rolesResponse.Add(roleRespone);
+            }
+            return rolesResponse;
+        }
         public async Task<Result<IReadOnlyCollection<UserResponse>>> GetAllUsersAsync(CancellationToken cancellationToken = default)
         {
             var users = await _userManager.Users.ToListAsync(cancellationToken);

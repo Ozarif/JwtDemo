@@ -8,7 +8,7 @@ using JwtDemo.Domain.Abstractions;
 
 namespace JwtDemo.Application.Features.Identity.RegisterUser
 {
-    public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand>
+    internal class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand>
     {
         private readonly IIdentityService _identityService;
 

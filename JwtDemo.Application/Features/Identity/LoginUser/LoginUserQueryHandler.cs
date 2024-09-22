@@ -5,7 +5,7 @@ using JwtDemo.Domain.Abstractions;
 
 namespace JwtDemo.Application.Features.Identity.LoginUser
 {
-    public class LoginUserQueryHandler : IQueryHandler<LoginUserQuery, LoginResponse>
+    internal class LoginUserQueryHandler : IQueryHandler<LoginUserQuery, LoginResponse>
     {
         private readonly IIdentityService _identityService;
 
